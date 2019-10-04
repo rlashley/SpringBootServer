@@ -1,38 +1,38 @@
 package tech.lashley.springbootserver;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.Scanner;
 
 
 public class Feedback {
     private String content;
-    public Feedback(long counter) {
+    public Feedback() {
         //Modify to feed file into this constructor, data then passed to Spring Application
         this.content = readText();
-        content=(Long.toString(counter) + " " + content);
     }
     public String getContent() {
         return content;
     }
 
+    //reads the feedback.txt file
     private String readText(){
     	File file = null;
-    	FileReader fr = null;
+    	Scanner scan = null;
 	    String feedbackText = "";
 	    try {
-	        file = new File("C:\\Users\\rlash\\Documents\\feedback.txt");
-		    fr = new FileReader(file);
+	        file = new File("src/home/pi/Public/feedback/feedback.txt");
+		    scan = new Scanner(file);
 	    } catch(Exception e){
 	        System.out.println(e);
 	    }
 
+	    //while there's a next line, add it to output
 	    try {
-	        while (fr.read() != -1) {
-	            feedbackText += fr.read();
+	        while (scan.hasNextLine()) {
+	            feedbackText += (scan.nextLine()+" ");
 	        }
-		    fr.close();
-	    } catch(IOException e){
+		    scan.close();
+	    } catch(Exception e){
 	        System.err.println(e);
 	    }
 	    return feedbackText;
